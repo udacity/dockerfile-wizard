@@ -34,7 +34,7 @@ fi
 
 if [ ! -e $SBT_VERSION_NUM ] ; then
     echo "RUN apt install -y curl \
-    curl -L -o sbt-$SBT_VERSION_NUM.deb https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION_NUM.deb \
+    wget https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION_NUM.deb \
     dpkg -i sbt-$SBT_VERSION_NUM.deb \
     rm sbt-$SBT_VERSION_NUM.deb"
 fi
