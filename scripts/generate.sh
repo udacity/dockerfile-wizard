@@ -32,12 +32,7 @@ if [ ! -e $PYTHON_VERSION_NUM ] ; then
     python$PYTHON_VERSION_NUM-venv"
 fi
 
-if [ ! -e $SBT_VERSION_NUM ] ; then
-    echo "RUN apt install -y curl \
-    wget https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION_NUM.deb \
-    dpkg -i sbt-$SBT_VERSION_NUM.deb \
-    rm sbt-$SBT_VERSION_NUM.deb"
-fi
+
 
 if [ $AWS_CLI = "true" ] ; then
     echo "RUN apt-get install -y python-pip\
@@ -73,6 +68,14 @@ RUN if [ \$(grep 'VERSION_ID="8"' /etc/os-release) ] ; then \\
     apt-get -y install oracle-java8-installer \\
 ; fi
 EOF
+fi
+
+if [ ! -e $SBT_VERSION_NUM ] ; then
+    echo "RUN wget https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION_NUM.deb \
+    dpkg -i sbt.deb \
+    apt-get -y update \
+    apt-get -y install sbt \
+    rm sbt-$SBT_VERSION_NUM.deb"
 fi
 
 if [ $MYSQL_CLIENT = "true" ] ; then
