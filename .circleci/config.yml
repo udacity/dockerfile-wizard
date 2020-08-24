@@ -47,18 +47,18 @@ jobs:
 
       - run: bash scripts/generate.sh > Dockerfile
 
-      - run: docker login -u $UDACITY_DOCKER_USER -p $UDACITY_DOCKER_PASS
+      - run: docker login -u $DOCKER_USER --password-stdin $DOCKER_PASS
 
-      - run: docker build -t $UDACITY_DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG .
+      - run: docker build -t $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG .
 
-      #- run: docker push $UDACITY_DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG && sleep 10
+      #- run: docker push $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG && sleep 10
 
       - store_artifacts:
           path: Dockerfile
 
   test_image:
     docker:
-      - image: $UDACITY_DOCKER_USER/crater-lake-build-deploy:latest
+      - image: $DOCKER_USER/crater-lake-build-deploy:latest
         environment:
           <<: *image_config
 
