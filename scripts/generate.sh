@@ -35,6 +35,18 @@ if [ ! -e $PYTHON_VERSION_NUM ] ; then
     make install"
 fi
 
+if [ ! -e $SBT_VERSION_NUM ] ; then
+    echo "RUN apt install -y curl \
+    curl -L -o sbt-$SBT_VERSION_NUM.deb https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION_NUM.deb \
+    dpkg -i sbt-$SBT_VERSION_NUM.deb \
+    rm sbt-$SBT_VERSION_NUM.deb"
+fi
+
+if [ $AWS_CLI = "true" ] ; then
+    echo "RUN apt-get install -y python-pip\
+    pip install awscli"
+fi
+
 # if [ ! -e $PHP_VERSION_NUM ] ; then
 #     wget "http://php.net/distributions/php-${PHP_VERSION_NUM}.tar.xz"
 # fi
@@ -98,37 +110,3 @@ echo "RUN perl -MCPAN -e 'install XML::Generator'"
 # install lsb-release, etc., for testing linux distro
 echo "RUN apt-get update && apt-get -y install lsb-release unzip"
 
-if [ $BROWSERS = "true" ] ; then
-cat << EOF
-RUN if [ \$(grep 'VERSION_ID="8"' /etc/os-release) ] ; then \\
-    echo "deb http://ftp.debian.org/debian jessie-backports main" >> /etc/apt/sources.list && \\
-    apt-get update && apt-get -y install -t jessie-backports xvfb phantomjs \\
-; else \\
-		apt-get update && apt-get -y install xvfb phantomjs \\
-; fi
-EOF
-echo "ENV DISPLAY :99"
-
-echo "# install firefox
-RUN curl --silent --show-error --location --fail --retry 3 --output /tmp/firefox.deb https://s3.amazonaws.com/circle-downloads/firefox-mozilla-build_47.0.1-0ubuntu1_amd64.deb \
-  && echo 'ef016febe5ec4eaf7d455a34579834bcde7703cb0818c80044f4d148df8473bb  /tmp/firefox.deb' | sha256sum -c \
-  && dpkg -i /tmp/firefox.deb || apt-get -f install  \
-  && apt-get install -y libgtk3.0-cil-dev libasound2 libasound2 libdbus-glib-1-2 libdbus-1-3 \
-  && rm -rf /tmp/firefox.deb"
-
-echo "# install chrome
-RUN curl --silent --show-error --location --fail --retry 3 --output /tmp/google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-  && (dpkg -i /tmp/google-chrome-stable_current_amd64.deb || apt-get -fy install)  \
-  && rm -rf /tmp/google-chrome-stable_current_amd64.deb \
-  && sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox --no-sandbox|g' \
-       \"/opt/google/chrome/google-chrome\""
-
-echo "# install chromedriver
-RUN apt-get -y install libgconf-2-4 \
-  && curl --silent --show-error --location --fail --retry 3 --output /tmp/chromedriver_linux64.zip \"http://chromedriver.storage.googleapis.com/2.33/chromedriver_linux64.zip\" \
-  && cd /tmp \
-  && unzip chromedriver_linux64.zip \
-  && rm -rf chromedriver_linux64.zip \
-  && mv chromedriver /usr/local/bin/chromedriver \
-  && chmod +x /usr/local/bin/chromedriver"
-fi
