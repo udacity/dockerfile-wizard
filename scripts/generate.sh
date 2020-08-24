@@ -35,7 +35,7 @@ fi
 
 
 if [ $AWS_CLI = "true" ] ; then
-    echo "RUN apt-get install -y python-pip\
+    echo "RUN apt-get install -y python3-pip\
     pip install awscli"
 fi
 
