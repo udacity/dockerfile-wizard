@@ -27,12 +27,9 @@ if [ ! -e $NODE_VERSION_NUM ] ; then
 fi
 
 if [ ! -e $PYTHON_VERSION_NUM ] ; then
-    echo "RUN wget https://www.python.org/ftp/python/$PYTHON_VERSION_NUM/Python-$PYTHON_VERSION_NUM.tgz && \
-    tar xzf Python-$PYTHON_VERSION_NUM.tgz && \
-    rm Python-$PYTHON_VERSION_NUM.tgz && \
-    cd Python-$PYTHON_VERSION_NUM && \
-    ./configure && \
-    make install"
+    echo "RUN apt-get install python$PYTHON_VERSION_NUM \
+    python$PYTHON_VERSION_NUM-dev python$PYTHON_VERSION_NUM-distutils \
+    python$PYTHON_VERSION_NUM-venv"
 fi
 
 if [ ! -e $SBT_VERSION_NUM ] ; then

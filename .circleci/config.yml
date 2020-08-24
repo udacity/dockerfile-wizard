@@ -47,9 +47,9 @@ jobs:
 
       - run: bash scripts/generate.sh > Dockerfile
 
-      - run: docker build -t $IMAGE_NAME:$IMAGE_TAG .
+      - run: docker login -u $DOCKER_USER --password $DOCKER_PASS
 
-      #- run: docker login -u $DOCKER_USER --password-stdin $DOCKER_PASS
+      - run: docker build -t $IMAGE_NAME:$IMAGE_TAG .
 
       #- run: docker build -t $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG .
 
