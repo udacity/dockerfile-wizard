@@ -27,7 +27,7 @@ if [ ! -e $NODE_VERSION_NUM ] ; then
 fi
 
 if [ ! -e $PYTHON_VERSION_NUM ] ; then
-    echo "RUN apt-get install python$PYTHON_VERSION_NUM \
+    echo "RUN apt-get install -y python$PYTHON_VERSION_NUM \
     python$PYTHON_VERSION_NUM-dev python$PYTHON_VERSION_NUM-distutils \
     python$PYTHON_VERSION_NUM-venv"
 fi
