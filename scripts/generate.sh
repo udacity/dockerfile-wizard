@@ -26,18 +26,19 @@ if [ ! -e $NODE_VERSION_NUM ] ; then
     rm -r node-v$NODE_VERSION_NUM"
 fi
 
-if [ ! -e $PYTHON_VERSION_NUM ] ; then
-    echo "RUN apt-get install -y python$PYTHON_VERSION_NUM \
-    python$PYTHON_VERSION_NUM-dev python$PYTHON_VERSION_NUM-distutils \
-    python$PYTHON_VERSION_NUM-venv"
+if [ $AWS_CLI = "true"] ; then
+    echo "RUN apt-get update && \
+    apt-get install -y \
+        python3 \
+        python3-pip \
+        python3-setuptools \
+        groff \
+        less \
+    && pip3 install --upgrade pip \
+    && pip3 --no-cache-dir install --upgrade awscli \
+    && apt-get clean"
 fi
 
-
-
-if [ $AWS_CLI = "true" ] ; then
-    echo "RUN apt-get install -y python3-pip\
-    pip install awscli"
-fi
 
 # if [ ! -e $PHP_VERSION_NUM ] ; then
 #     wget "http://php.net/distributions/php-${PHP_VERSION_NUM}.tar.xz"
