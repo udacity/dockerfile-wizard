@@ -26,9 +26,8 @@ if [ ! -e $NODE_VERSION_NUM ] ; then
     rm -r node-v$NODE_VERSION_NUM"
 fi
 
-if [ $AWS_CLI = "true"] ; then
-    echo "RUN apt-get update && \
-    apt-get install -y \
+if [ $AWS_CLI = "true" ] ; then
+    echo "RUN apt-get install -y \
         python3 \
         python3-pip \
         python3-setuptools \
