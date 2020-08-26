@@ -36,6 +36,7 @@ if [ $AWS_CLI = "true"] ; then
         less \
     && pip3 install --upgrade pip \
     && pip3 --no-cache-dir install --upgrade awscli \
+    && pip3 --no-cache-dir install --upgrade boto3 \
     && apt-get clean"
 fi
 
